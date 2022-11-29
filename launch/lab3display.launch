@@ -8,7 +8,8 @@
 		<arg name="use_robot_state_publisher" default="true"/>
 		<arg name="file" default="$(find lab3nav)/urdf/lab3nav.xacro" />
 		<arg name="use_sim_time" default="true"/>
-
+		<arg name ="rviz_config" default="lab3laserconfig.rviz" />
+		
 	</include>
 	
 	<!-- Starts the rosbag playback -->
