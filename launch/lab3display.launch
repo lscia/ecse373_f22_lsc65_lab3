@@ -4,22 +4,21 @@
 	<include file="$(find navvis_description)/launch/display.launch">
 
 		<!-- sets the necessary args for the lab2 launch file -->
-		<arg name="use_xacro" default="false" />
+		<arg name="use_xacro" default="true" />
 		<arg name="use_robot_state_publisher" default="true"/>
 		<arg name="file" default="$(find lab3nav)/urdf/lab3nav.xacro" />
-		<arg name="use_sim_time" default="true"/>
-		<arg name ="rviz_config" default="lab3laserconfig.rviz" />
+		<arg name ="rviz_config" default="$(find lab3nav)/launch/lab3mapconfig.rviz" />
 		
 	</include>
 	
 	<!-- Starts the rosbag playback -->
-	<node pkg="rosbag" type="play" name="player" args="-clock $(find ros_bag_data)/glennan_5_complete.bag"/>
+	<arg name="bag_file" default = "~/catkin_ws/src/ros_bag_data/glennan5_basic_short.bag" />
+	<node pkg="rosbag" type="play" name="player" args="--clock $(arg bag_file) /tf_trajectory:=/tf"/>
 	
-	<!-- Checks if the map is desired, then use included map launch file to start it with small/regular map size -->
-	<arg name="use_map" default="false" />
-	<include file="$(find maps_glennan)/launch/glennan5_map.launch" if="$(arg use_map)">
-		<arg name="small" default="false" />
-	</include>
+	<!-- Checks if the map is desired, then use included map launch file to start it-->
+	<arg name="use_map" default="true"/>
+	<arg name="map_file" default="$(find maps_glennan/launch/glennan5_map.launch" />
+	<include file="$(find maps_glennan)/launch/glennan5_map.launch" if="$(arg use_map)"/>
 
 
 </launch>
